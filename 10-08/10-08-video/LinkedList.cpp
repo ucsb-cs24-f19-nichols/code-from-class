@@ -30,6 +30,8 @@ LinkedList& LinkedList::operator=(const LinkedList &other) {
     head = other.head;
     tail = other.tail;
 
+    return *this;
+
     // this isn't good! We should copy any of the elements
     // so that if we delete on in our linked list, it doesn't affect
     // the linked list that we copied from!
@@ -60,7 +62,24 @@ void LinkedList::append(int x) {
 }
 
 bool LinkedList::operator==(const LinkedList &other) const {
-    return false; // Stub -- compiles, but not the correct implementation
+    // iterate through both lists at the same time,
+    // and see if the values inside each node lines up
+    Node *n1 = head; // our head
+    Node *n2 = other.head; // their head
+
+    while (n1 != nullptr && n2 != nullptr) {
+        // check if their data values are the same
+        if (n1->info != n2->info) return false;
+
+        // keep going; advance both pointers
+        n1 = n1->next;
+        n2 = n2->next;
+    }
+
+    // once we got here, at least one of n1 and n2 is equal to nullptr
+    // if they're both nullptr, then the lists were the same
+    if (n1 == nullptr && n2 == nullptr) return true;
+    else return false; // one list wasn't empty (and the other was)
 }
 
 vector<int> LinkedList::vectorize() const {
