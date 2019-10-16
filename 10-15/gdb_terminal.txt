@@ -1,0 +1,536 @@
+lawtonnichols@lawtonnichols-VirtualBox:/media/sf_code-from-class$ ls
+09-26  10-01  10-03  10-08  10-10
+lawtonnichols@lawtonnichols-VirtualBox:/media/sf_code-from-class$ gdb
+GNU gdb (Ubuntu 8.1-0ubuntu3.1) 8.1.0.20180409-git
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word".
+(gdb) h
+List of classes of commands:
+
+aliases -- Aliases of other commands
+breakpoints -- Making program stop at certain points
+data -- Examining data
+files -- Specifying and examining files
+internals -- Maintenance commands
+obscure -- Obscure features
+running -- Running the program
+stack -- Examining the stack
+status -- Status inquiries
+support -- Support facilities
+tracepoints -- Tracing of program execution without stopping the program
+user-defined -- User-defined commands
+
+Type "help" followed by a class name for a list of commands in that class.
+Type "help all" for the list of all commands.
+Type "help" followed by command name for full documentation.
+Type "apropos word" to search for commands related to "word".
+Command name abbreviations are allowed if unambiguous.
+(gdb) help stack
+Examining the stack.
+The stack is made up of stack frames.  Gdb assigns numbers to stack frames
+counting from zero for the innermost (currently executing) frame.
+
+At any time gdb identifies one frame as the "selected" frame.
+Variable lookups are done with respect to the selected frame.
+When the program being debugged stops, gdb selects the innermost frame.
+The commands below can be used to select other frames by number or address.
+
+List of commands:
+
+backtrace -- Print backtrace of all stack frames
+bt -- Print backtrace of all stack frames
+down -- Select and print stack frame called by this one
+frame -- Select and print a stack frame
+return -- Make selected stack frame return to its caller
+select-frame -- Select a stack frame without printing anything
+up -- Select and print stack frame that called this one
+
+Type "help" followed by command name for full documentation.
+---Type <return> to continue, or q <return> to quit---
+Type "apropos word" to search for commands related to "word".
+Command name abbreviations are allowed if unambiguous.
+(gdb) quit
+lawtonnichols@lawtonnichols-VirtualBox:/media/sf_code-from-class$ ls
+09-26  10-01  10-03  10-08  10-10
+lawtonnichols@lawtonnichols-VirtualBox:/media/sf_code-from-class$ cd 10-15/
+lawtonnichols@lawtonnichols-VirtualBox:/media/sf_code-from-class/10-15$ ls
+gdb_example.cpp
+lawtonnichols@lawtonnichols-VirtualBox:/media/sf_code-from-class/10-15$ g++ -g gdb_example.cpp -o gdb_example
+lawtonnichols@lawtonnichols-VirtualBox:/media/sf_code-from-class/10-15$ gdb gdb_example
+GNU gdb (Ubuntu 8.1-0ubuntu3.1) 8.1.0.20180409-git
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from gdb_example...done.
+(gdb) r 3
+Starting program: /media/sf_code-from-class/10-15/gdb_example 3
+You entered 3 as a command line argument.
+foo()
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000555555554994 in segfault3 () at gdb_example.cpp:18
+18	    cout << *p << endl;
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 7334] will be killed.
+
+Quit anyway? (y or n) y
+lawtonnichols@lawtonnichols-VirtualBox:/media/sf_code-from-class/10-15$ make gdb_example 
+g++ -g -std=c++11 gdb_example.cpp -o gdb_example
+lawtonnichols@lawtonnichols-VirtualBox:/media/sf_code-from-class/10-15$ ./gdb_example 1
+You entered 1 as a command line argument.
+foo()
+Segmentation fault (core dumped)
+lawtonnichols@lawtonnichols-VirtualBox:/media/sf_code-from-class/10-15$ gdb gdb_example
+GNU gdb (Ubuntu 8.1-0ubuntu3.1) 8.1.0.20180409-git
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from gdb_example...done.
+(gdb) r 1
+Starting program: /media/sf_code-from-class/10-15/gdb_example 1
+You entered 1 as a command line argument.
+foo()
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000555555554994 in segfault3 () at gdb_example.cpp:18
+18	    cout << *p << endl; // segfault will happen right here!
+(gdb) list
+13	}
+14	
+15	void segfault3() {
+16	    int x = 3;
+17	    int *p = nullptr;
+18	    cout << *p << endl; // segfault will happen right here!
+19	}
+20	
+21	void segfault2() {
+22	    int w = 2;
+(gdb) print p
+$1 = (int *) 0x0
+(gdb) print x
+$2 = 3
+(gdb) p x
+$3 = 3
+(gdb) info locals
+x = 3
+p = 0x0
+(gdb) q
+A debugging session is active.
+
+	Inferior 1 [process 7414] will be killed.
+
+Quit anyway? (y or n) y
+lawtonnichols@lawtonnichols-VirtualBox:/media/sf_code-from-class/10-15$ gdb gdb_example
+GNU gdb (Ubuntu 8.1-0ubuntu3.1) 8.1.0.20180409-git
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from gdb_example...done.
+(gdb) r 1
+Starting program: /media/sf_code-from-class/10-15/gdb_example 1
+You entered 1 as a command line argument.
+foo()
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000555555554994 in segfault3 () at gdb_example.cpp:18
+18	    cout << *p << endl; // segfault will happen right here!
+(gdb) bt
+#0  0x0000555555554994 in segfault3 () at gdb_example.cpp:18
+#1  0x00005555555549d0 in segfault2 () at gdb_example.cpp:23
+#2  0x00005555555549e7 in elaborate_segfault () at gdb_example.cpp:28
+#3  0x0000555555554a5a in main (argc=2, argv=0x7fffffffe0e8)
+    at gdb_example.cpp:42
+(gdb) info locals
+x = 3
+p = 0x0
+(gdb) up
+#1  0x00005555555549d0 in segfault2 () at gdb_example.cpp:23
+23	    segfault3();
+(gdb) list
+18	    cout << *p << endl; // segfault will happen right here!
+19	}
+20	
+21	void segfault2() {
+22	    int w = 2;
+23	    segfault3();
+24	}
+25	
+26	void elaborate_segfault() {
+27	    int v = 1;
+(gdb) info locals
+w = 2
+(gdb) up
+#2  0x00005555555549e7 in elaborate_segfault () at gdb_example.cpp:28
+28	    segfault2();
+(gdb) info locals
+v = 1
+(gdb) p v
+$1 = 1
+(gdb) bt
+#0  0x0000555555554994 in segfault3 () at gdb_example.cpp:18
+#1  0x00005555555549d0 in segfault2 () at gdb_example.cpp:23
+#2  0x00005555555549e7 in elaborate_segfault () at gdb_example.cpp:28
+#3  0x0000555555554a5a in main (argc=2, argv=0x7fffffffe0e8)
+    at gdb_example.cpp:42
+(gdb) up
+#3  0x0000555555554a5a in main (argc=2, argv=0x7fffffffe0e8)
+    at gdb_example.cpp:42
+42	    elaborate_segfault();
+(gdb) info locals
+arg = 1
+x = 8
+(gdb) p x
+$2 = 8
+(gdb) $2
+Undefined command: "$2".  Try "help".
+(gdb) print $2
+$3 = 8
+(gdb) bt
+#0  0x0000555555554994 in segfault3 () at gdb_example.cpp:18
+#1  0x00005555555549d0 in segfault2 () at gdb_example.cpp:23
+#2  0x00005555555549e7 in elaborate_segfault () at gdb_example.cpp:28
+#3  0x0000555555554a5a in main (argc=2, argv=0x7fffffffe0e8)
+    at gdb_example.cpp:42
+(gdb) down
+#2  0x00005555555549e7 in elaborate_segfault () at gdb_example.cpp:28
+28	    segfault2();
+(gdb) down 2
+#0  0x0000555555554994 in segfault3 () at gdb_example.cpp:18
+18	    cout << *p << endl; // segfault will happen right here!
+(gdb) p p
+$4 = (int *) 0x0
+(gdb) up 3
+#3  0x0000555555554a5a in main (argc=2, argv=0x7fffffffe0e8)
+    at gdb_example.cpp:42
+42	    elaborate_segfault();
+(gdb) help info
+Generic command for showing things about the program being debugged.
+
+List of info subcommands:
+
+info address -- Describe where symbol SYM is stored
+info all-registers -- List of all registers and their contents
+info args -- Argument variables of current stack frame
+info auto-load -- Print current status of auto-loaded files
+info auxv -- Display the inferior's auxiliary vector
+info bookmarks -- Status of user-settable bookmarks
+info breakpoints -- Status of specified breakpoints (all user-settable breakpoints if no argument)
+info checkpoints -- IDs of currently known checkpoints
+info classes -- All Objective-C classes
+info common -- Print out the values contained in a Fortran COMMON block
+info copying -- Conditions for redistributing copies of GDB
+info dcache -- Print information on the dcache performance
+info display -- Expressions to display when program stops
+info exceptions -- List all Ada exception names
+info extensions -- All filename extensions associated with a source language
+info files -- Names of targets and files being debugged
+---Type <return> to continue, or q <return> to quit---
+info float -- Print the status of the floating point unit
+info frame -- All about selected stack frame
+info frame-filter -- List all registered Python frame-filters
+info functions -- All function names
+info guile -- Prefix command for Guile info displays
+info handle -- What debugger does when program gets various signals
+info inferiors -- IDs of specified inferiors (all inferiors if no argument)
+info line -- Core addresses of the code for a source line
+info locals -- Local variables of current stack frame
+info macro -- Show the definition of MACRO
+info macros -- Show the definitions of all macros at LINESPEC
+info mem -- Memory region attributes
+info os -- Show OS data ARG
+info pretty-printer -- GDB command to list all registered pretty-printers
+info probes -- Show available static probes
+info proc -- Show /proc process information about any running process
+info program -- Execution status of the program
+info record -- Info record options
+info registers -- List of integer registers and their contents
+info scope -- List the variables local to a scope
+info selectors -- All Objective-C selectors
+---Type <return> to continue, or q <return> to quit---
+info set -- Show all GDB settings
+info sharedlibrary -- Status of loaded shared object libraries
+info signals -- What debugger does when program gets various signals
+info skip -- Display the status of skips
+info source -- Information about the current source file
+info sources -- Source files in the program
+info stack -- Backtrace of the stack
+info static-tracepoint-markers -- List target static tracepoints markers
+info symbol -- Describe what symbol is at location ADDR
+info target -- Names of targets and files being debugged
+info tasks -- Provide information about all known Ada tasks
+info terminal -- Print inferior's saved terminal status
+info threads -- Display currently known threads
+info tracepoints -- Status of specified tracepoints (all tracepoints if no argument)
+info tvariables -- Status of trace state variables and their values
+info type-printers -- GDB command to list all registered type-printers
+info types -- All type names
+info unwinder -- GDB command to list unwinders
+info variables -- All global and static variable names
+info vector -- Print the status of the vector unit
+---Type <return> to continue, or q <return> to quit---
+info vtbl -- Show the virtual function table for a C++ object
+info warranty -- Various kinds of warranty you do not have
+info watchpoints -- Status of specified watchpoints (all watchpoints if no argument)
+info win -- List of all displayed windows
+info xmethod -- GDB command to list registered xmethod matchers
+
+Type "help info" followed by info subcommand name for full documentation.
+Type "apropos word" to search for commands related to "word".
+Command name abbreviations are allowed if unambiguous.
+(gdb) info locals
+arg = 1
+x = 8
+(gdb) info args 
+argc = 2
+argv = 0x7fffffffe0e8
+(gdb) p argv[0]
+$5 = 0x7fffffffe3e8 "/media/sf_code-from-class/10-15/gdb_example"
+(gdb) p argv[1]
+$6 = 0x7fffffffe414 "1"
+(gdb) p argv[2]
+$7 = 0x0
+(gdb) p argv[3]
+$8 = 0x7fffffffe416 "LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc"...
+(gdb) p argv[0]@2
+$9 = {0x7fffffffe3e8 "/media/sf_code-from-class/10-15/gdb_example", 
+  0x7fffffffe414 "1"}
+(gdb) b 37
+Breakpoint 1 at 0x555555554a48: file gdb_example.cpp, line 37.
+(gdb) r 1
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /media/sf_code-from-class/10-15/gdb_example 1
+You entered 1 as a command line argument.
+
+Breakpoint 1, main (argc=2, argv=0x7fffffffe0e8) at gdb_example.cpp:37
+37	    x = x + 1;
+(gdb) p x
+$10 = 5
+(gdb) step
+38	    x = x + 2;
+(gdb) p x
+$11 = 6
+(gdb) s
+40	    foo();
+(gdb) p x
+$12 = 8
+(gdb) c
+Continuing.
+foo()
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000555555554994 in segfault3 () at gdb_example.cpp:18
+18	    cout << *p << endl; // segfault will happen right here!
+(gdb) info breakpoints 
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000555555554a48 in main(int, char**) 
+                                                   at gdb_example.cpp:37
+	breakpoint already hit 1 time
+(gdb) help break
+Set breakpoint at specified location.
+break [PROBE_MODIFIER] [LOCATION] [thread THREADNUM] [if CONDITION]
+PROBE_MODIFIER shall be present if the command is to be placed in a
+probe point.  Accepted values are `-probe' (for a generic, automatically
+guessed probe type), `-probe-stap' (for a SystemTap probe) or 
+`-probe-dtrace' (for a DTrace probe).
+LOCATION may be a linespec, address, or explicit location as described
+below.
+
+With no LOCATION, uses current execution address of the selected
+stack frame.  This is useful for breaking on return to a stack frame.
+
+THREADNUM is the number from "info threads".
+CONDITION is a boolean expression.
+
+Linespecs are colon-separated lists of location parameters, such as
+source filename, function name, label name, and line number.
+Example: To specify the start of a label named "the_top" in the
+function "fact" in the file "factorial.c", use
+"factorial.c:fact:the_top".
+
+---Type <return> to continue, or q <return> to quit---
+Address locations begin with "*" and specify an exact address in the
+program.  Example: To specify the fourth byte past the start function
+"main", use "*main + 4".
+
+Explicit locations are similar to linespecs but use an option/argument
+syntax to specify location parameters.
+Example: To specify the start of the label named "the_top" in the
+function "fact" in the file "factorial.c", use "-source factorial.c
+-function fact -label the_top".
+
+By default, a specified function is matched against the program's
+functions in all scopes.  For C++, this means in all namespaces and
+classes.  For Ada, this means in all packages.  E.g., in C++,
+"func()" matches "A::func()", "A::B::func()", etc.  The
+"-qualified" flag overrides this behavior, making GDB interpret the
+specified name as a complete fully-qualified name instead.
+
+Multiple breakpoints at one place are permitted, and useful if their
+conditions are different.
+
+Do "help breakpoints" for info on other commands dealing with breakpoints.
+(gdb) help breakpoints
+Making program stop at certain points.
+
+List of commands:
+
+awatch -- Set a watchpoint for an expression
+break -- Set breakpoint at specified location
+break-range -- Set a breakpoint for an address range
+catch -- Set catchpoints to catch events
+catch assert -- Catch failed Ada assertions
+catch catch -- Catch an exception
+catch exception -- Catch Ada exceptions
+catch exec -- Catch calls to exec
+catch fork -- Catch calls to fork
+catch handlers -- Catch Ada exceptions
+catch load -- Catch loads of shared libraries
+catch rethrow -- Catch an exception
+catch signal -- Catch signals by their names and/or numbers
+catch syscall -- Catch system calls by their names
+catch throw -- Catch an exception
+catch unload -- Catch unloads of shared libraries
+catch vfork -- Catch calls to vfork
+---Type <return> to continue, or q <return> to quit---
+clear -- Clear breakpoint at specified location
+commands -- Set commands to be executed when the given breakpoints are hit
+condition -- Specify breakpoint number N to break only if COND is true
+delete -- Delete some breakpoints or auto-display expressions
+delete bookmark -- Delete a bookmark from the bookmark list
+delete breakpoints -- Delete some breakpoints or auto-display expressions
+delete checkpoint -- Delete a checkpoint (experimental)
+delete display -- Cancel some expressions to be displayed when program stops
+delete mem -- Delete memory region
+delete tracepoints -- Delete specified tracepoints
+delete tvariable -- Delete one or more trace state variables
+disable -- Disable some breakpoints
+disable breakpoints -- Disable some breakpoints
+disable display -- Disable some expressions to be displayed when program stops
+disable frame-filter -- GDB command to disable the specified frame-filter
+disable mem -- Disable memory region
+disable pretty-printer -- GDB command to disable the specified pretty-printer
+disable probes -- Disable probes
+disable type-printer -- GDB command to disable the specified type-printer
+disable unwinder -- GDB command to disable the specified unwinder
+---Type <return> to continue, or q <return> to quit---
+disable xmethod -- GDB command to disable a specified (group of) xmethod(s)
+dprintf -- Set a dynamic printf at specified location
+enable -- Enable some breakpoints
+enable breakpoints -- Enable some breakpoints
+enable breakpoints count -- Enable breakpoints for COUNT hits
+enable breakpoints delete -- Enable breakpoints and delete when hit
+enable breakpoints once -- Enable breakpoints for one hit
+enable count -- Enable breakpoints for COUNT hits
+enable delete -- Enable breakpoints and delete when hit
+enable display -- Enable some expressions to be displayed when program stops
+enable frame-filter -- GDB command to disable the specified frame-filter
+enable mem -- Enable memory region
+enable once -- Enable breakpoints for one hit
+enable pretty-printer -- GDB command to enable the specified pretty-printer
+enable probes -- Enable probes
+enable type-printer -- GDB command to enable the specified type printer
+enable unwinder -- GDB command to enable unwinders
+enable xmethod -- GDB command to enable a specified (group of) xmethod(s)
+ftrace -- Set a fast tracepoint at specified location
+hbreak -- Set a hardware assisted breakpoint
+ignore -- Set ignore-count of breakpoint number N to COUNT
+---Type <return> to continue, or q <return> to quit---
+rbreak -- Set a breakpoint for all functions matching REGEXP
+rwatch -- Set a read watchpoint for an expression
+save -- Save breakpoint definitions as a script
+save breakpoints -- Save current breakpoint definitions as a script
+save gdb-index -- Save a gdb-index file
+save tracepoints -- Save current tracepoint definitions as a script
+skip -- Ignore a function while stepping
+skip delete -- Delete skip entries
+skip disable -- Disable skip entries
+skip enable -- Enable skip entries
+skip file -- Ignore a file while stepping
+skip function -- Ignore a function while stepping
+strace -- Set a static tracepoint at location or marker
+tbreak -- Set a temporary breakpoint
+tcatch -- Set temporary catchpoints to catch events
+tcatch assert -- Catch failed Ada assertions
+tcatch catch -- Catch an exception
+tcatch exception -- Catch Ada exceptions
+tcatch exec -- Catch calls to exec
+tcatch fork -- Catch calls to fork
+tcatch handlers -- Catch Ada exceptions
+---Type <return> to continue, or q <return> to quit---
+tcatch load -- Catch loads of shared libraries
+tcatch rethrow -- Catch an exception
+tcatch signal -- Catch signals by their names and/or numbers
+tcatch syscall -- Catch system calls by their names
+tcatch throw -- Catch an exception
+tcatch unload -- Catch unloads of shared libraries
+tcatch vfork -- Catch calls to vfork
+thbreak -- Set a temporary hardware assisted breakpoint
+trace -- Set a tracepoint at specified location
+watch -- Set a watchpoint for an expression
+
+Type "help" followed by command name for full documentation.
+Type "apropos word" to search for commands related to "word".
+Command name abbreviations are allowed if unambiguous.
+(gdb) 
+(gdb) r 1
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /media/sf_code-from-class/10-15/gdb_example 1
+You entered 1 as a command line argument.
+
+Breakpoint 1, main (argc=2, argv=0x7fffffffe0e8) at gdb_example.cpp:37
+37	    x = x + 1;
+(gdb) s
+38	    x = x + 2;
+(gdb) p x
+$13 = 6
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 7429] will be killed.
+
+Quit anyway? (y or n) y
