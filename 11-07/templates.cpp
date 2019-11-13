@@ -32,11 +32,13 @@ int main(int argc, char const *argv[])
     cout << maximum(42.1, 43.2) << endl; // compiler can figure out the <double>
     cout << maximum<string>("foo", "bar") << endl;
 
-    //  BSTNode n1(10); // requires int
+    // BSTNode n1(10); // requires <int> OR -std=c++17
     BSTNode<int> n2(10);
 
     // BSTNode* nodePtr;
-    BSTNode<int>* nodePtr = new BSTNode<int>(42);
+    BSTNode<int> *nodePtr = new BSTNode<int>(42);
+    auto nodePtr3 = new BSTNode<int>(42);
+    // auto nodePtr2 = new BSTNode(42); // also works with -std=c++17 
 
     return 0;
 }
